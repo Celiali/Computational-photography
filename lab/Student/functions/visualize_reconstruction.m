@@ -66,7 +66,7 @@ if ~isempty( texture )
     axis equal
     axis vis3d
     grid on
-    draw_textured_triangles( triang, X, Y, Z, points2d_cartesian(1,:), points2d_cartesian(2,:), texture', 32 )
+    draw_textured_triangles( triang, X, Y, Z, points2d_cartesian(1,:), points2d_cartesian(2,:), texture, 32 )
 end
 hold off;
 
