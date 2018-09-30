@@ -35,22 +35,41 @@ if version == 1
     p_ab = zeros(size(points2d));
     p_ab(:,:,1) = p_a;
     p_ab(:,:,2) = p_b;
-    [F,NormMat,points2d_norm] = compute_F_matrix( p_ab );
-    E = NormMat(:,:,2)'*F*NormMat(:,:,1);
+%     [F,NormMat,points2d_norm] = compute_F_matrix( p_ab );
+
+    norm_mat_test = compute_normalization_matrices( p_ab );
+    for c=1:size(p_ab,3)
+        points2d_norm(:,:,c) =  norm_mat_test(:,:,c)*p_ab(:,:,c);
+    end
+    
+    numPoint = size(points2d_norm,2);
+    p_a_norm = points2d_norm(:,:,1);
+    p_b_norm = points2d_norm(:,:,2);
+    
+    % construct W matrix by using the normalized points
+    W = zeros(numPoint,9);
+    for i = 1:numPoint
+    %     W(i,:) = [p_a(:,i).*p_b(1,i); p_a(:,i).*p_b(2,i);  p_a(:,i)]';
+        x1 = p_a_norm(1,i);y1 = p_a_norm(2,i);
+        x2 = p_b_norm(1,i);y2 = p_b_norm(2,i);
+        W(i,:) = [x2*x1, x2*y1, x2, y2*x1, y2*y1, y2, x1, y1, 1]';
+    end
+    % use svd decomposition to solve Wh=0 to get h
+    [U, S, V] = svd(W);
+    f = V(:,end);
+    F = reshape(f,3,3)';
+
+    E = norm_mat_test(:,:,2)'*F*norm_mat_test(:,:,1);
     [Ue, Se, Ve] = svd(E);
     Scorrect = (Se(1,1) + Se(2,2))/2;
     E = Ue * [[Scorrect,0,0];[0,Scorrect,0];[0,0,0]] * Ve';
-    
-    % check the correctness of E
-    numPoint = size(points2d_norm,2);
-    for i=1:numPoint
-        fprintf("For %d pair of data, pb'*E*pa = %f. \n", [i, p_b(:,i)'*E* p_a(:,i)])
-%         fprintf("For %d pair of data, pb'*E*pa = %f. \n", [i, points2d(:,i,2)'*E* points2d(:,i,1)])
-    end
-    E
-%     [U,S,V] = svd(E);
-%     V
-%     S
+%     
+%     % check the correctness of E
+%     numPoint = size(points2d_norm,2);
+%     for i=1:numPoint
+%         fprintf("For %d pair of data, pb'*E*pa = %f. \n", [i, p_b(:,i)'*E* p_a(:,i)])
+% %         fprintf("For %d pair of data, pb'*E*pa = %f. \n", [i, points2d(:,i,2)'*E* points2d(:,i,1)])
+%     end
 else
     p_a = pinv(K(:,:,1))*points2d(:,:,1);
     p_b = pinv(K(:,:,2))*points2d(:,:,2);
@@ -73,11 +92,11 @@ else
     e = V(:,end);
     E = reshape(e,3,3)';
 
-    % check the correctness of E
-    for i=1:numPoint
-    %     p_b(:,i)'*E* p_a(:,i)
-        fprintf("For %d pair of data, pb'*E*pa' = %f. \n", [i, p_b(:,i)'*E* p_a(:,i)])
-    end
+%     % check the correctness of E
+%     for i=1:numPoint
+%     %     p_b(:,i)'*E* p_a(:,i)
+%         fprintf("For %d pair of data, pb'*E*pa' = %f. \n", [i, p_b(:,i)'*E* p_a(:,i)])
+%     end
 end
 
 

@@ -38,7 +38,7 @@ for i = 1:numPoint
 %     W(i,:) = [x1*x2, x1*y2, y1*x2, y1*y2, x1, y1, x2, y2, 1]';
     W(i,:) = [x2*x1, x2*y1, x2, y2*x1, y2*y1, y2, x1, y1, 1]';
 end
-
+s
 % use svd decomposition to solve Wh=0 to get h
 [U, S, V] = svd(W);
 f = V(:,end);

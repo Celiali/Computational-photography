@@ -22,7 +22,7 @@ VERSION             = REAL_DATA_LOAD;
 if VERSION == SYNTHETIC_DATA
     points2d_file = '../data/data_sphere.mat';
 else
-    points2d_file = '../data/data_teapot.mat';
+    points2d_file = '../data/data_teapot_final.mat';
 end
 
 %% The internal camera parameters
@@ -70,7 +70,7 @@ end
 
 %% Get the Essential matrix & Cameras & points3d
 
-E = compute_E_matrix( points2d, K );
+E = compute_E_matrix( points2d, K )
 
 [cameras camera_centers] = reconstruct_stereo_cameras( E, K, points2d(:,1,:) ); 
 

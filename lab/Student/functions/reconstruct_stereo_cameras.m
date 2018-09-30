@@ -28,7 +28,7 @@ function [cams, cam_centers] = reconstruct_stereo_cameras( E, K, points2d )
 %------------------------------
 % TODO: FILL IN THIS PART
 
-    % SVD decomposition and get t
+%     % SVD decomposition and get t
 %     [U, S, V] = svd(E);
 %     t = V(:,end);
 %     % rotation matrix
@@ -172,7 +172,8 @@ function [cams, cam_centers] = reconstruct_stereo_cameras( E, K, points2d )
                     cam_centers = zeros(4,2);
                     cam_centers(:,1) = [0;0;0;1];
                     if index==1 || index == 3
-                        cam_centers(:,2) = [t;1];
-                    else
                         cam_centers(:,2) = [-t;1];
+                    else
+                        cam_centers(:,2) = [t;1];
+                    end
 end
