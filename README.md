@@ -1,4 +1,6 @@
 # Computational-photography
+Zehang Weng zehang@kth.se
+Ci Li       cil@kth.se
 
 KTH DD2429 lab code
 
