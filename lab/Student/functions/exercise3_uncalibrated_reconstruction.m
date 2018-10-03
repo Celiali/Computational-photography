@@ -1,4 +1,4 @@
-% Script: uncalibrated_reconstruction.m 
+ % Script: uncalibrated_reconstruction.m 
 %
 % Method: Performs a reconstruction of two 
 %         uncalibrated cameras. The Fundametal matrix determines 

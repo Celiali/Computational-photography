@@ -35,9 +35,9 @@ function H = compute_rectification_matrix( points1, points2 )
 %             ycorrect = pcorrect(2);
 %             zcorrect = pcorrect(3);
 %             wcorrect = pcorrect(4);
-            pwrong = points1(:,i);
             pcorrect = points2(:,i);
-            x= pwrong(1); y=pwrong(2); z=pwrong(3); w=pwrong(4);
+            x= p2(1); y=p2(2); z=p2(3); w=p2(4);
+            pcorrect = points1(:,i);
             xcorrect = pcorrect(1);
             ycorrect = pcorrect(2);
             zcorrect = pcorrect(3);
@@ -55,6 +55,6 @@ function H = compute_rectification_matrix( points1, points2 )
     h = V(:, end);
     
     % reshape the h to H and return
-    H = reshape(h,4,4)';
+    H = reshape(h,4,4);
     
 end
