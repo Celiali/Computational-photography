@@ -44,4 +44,4 @@ function F = compute_F_matrix( points2d )
     Fcorrect1 = Se(1,1);
     Fcorrect2 = Se(2,2);
     F = Ue * [[Fcorrect1,0,0];[0,Fcorrect2,0];[0,0,0]] * Ve';
-end
+   
