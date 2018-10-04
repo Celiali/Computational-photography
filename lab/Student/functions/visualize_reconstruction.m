@@ -39,7 +39,7 @@ plot3( X, Y, Z, '.');
 plot3( camx, camy, camz, 'ro' );
 view(126,20)
 axis equal
-axis vis3d
+	
 grid on
 
 hold off;
